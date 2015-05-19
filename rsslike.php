@@ -53,18 +53,23 @@ $myquery = str_replace('&quot;','"',$myquery); // Rueckumwandlung, wegen Phrasen
 if (empty($base)) { exit("missing library base, exiting");}
 else if (empty($myquery)) {exit("missing query, exiting");}
 
-$cache_id = $_GET['output'] . $_GET['mybase'] . $_GET['myquery'];
+$cache_id = $_GET['mybase'] . $_GET['myquery'];
 
 $cache_options = array(
-    'cacheDir' => getcwd() . '/tmp/',
-    'lifeTime' => 72000
+    'cacheDir' => '/tmp/',
+    #'lifeTime' => 72000
+    'lifeTime' => 3600
 );
 
 $Cache_Lite = new Cache_Lite($cache_options);
 
-if ($myrss = $Cache_Lite->get($cache_id)) {
-
+if ($data = $Cache_Lite->get($cache_id)) {
+    $myrss = $data; 
+    header("X-Cache-Hit: true");
+    header("X-Data-Length: ". strlen($myrss));
 } else {
+
+    header("X-Cache-Hit: false");
     $bibname = "MPI for Research on Collective Goods";
 
 
@@ -305,20 +310,21 @@ if ($myrss = $Cache_Lite->get($cache_id)) {
 
     }
 
-    if ($_GET['output'] == json) {
+}
+if ($_GET['output'] == json) {
 
-        if (is_valid_callback($_GET['callback'])) {
-            print $_GET['callback'] . "(" . saveJSON($myrss) .")";
-        } else {
-            header('status: 400 Bad Request', true, 400);
-        }
+if (is_valid_callback($_GET['callback'])) {
+    header("X-Valid-Callback: true");
+    print $_GET['callback'] . "(" . saveJSON($myrss) .")";
+} else {
+    header('status: 400 Bad Request', true, 400);
+}
 
-    } else {
-        // default: RSS
-        print $myrss;
-
-    }
+} else {
+// default: RSS
+print $myrss;
 
 }
+
 ?>
 
