@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="../fonts/foundation-icons/foundation-icons.css" />
     <link rel="stylesheet" href="../css/slick.css" />
     <link rel="stylesheet" href="../css/local.css" />
-		<link rel="stylesheet" href="../img/octicons.css">
+	<link rel="stylesheet" href="../img/octicons.css">
     <script src="js/vendor/modernizr.js"></script>
-		<link rel="stylesheet" href="../fonts/stylesheet.css" />
+	<link rel="stylesheet" href="../fonts/stylesheet.css" />
 <!-- Issues: Google Font API does not work with Firefox (Firefox is picky with quotes in CSS) -->
 <!--		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
   </head>
@@ -25,14 +25,24 @@
 
 		<section id="intro">
 			<div class="first row centered-text">
-				<div id="landing" class="large-1 medium-2 small-3 columns">
+				<!-- back-button for medium to large screens -->
+				<div id="landing" class="large-1 medium-2 small-3 columns show-for-medium-up">
 					<a href="../index.html" id="landingpage" class="large button radius">
 						<i class="fi-arrow-left large"></i>
 					</a>
 				</div>
-				<div class="large-11 medium-10 small-9 columns">
+				<div class="large-11 medium-10 small-9 columns show-for-medium-up">
 					<h2>New E-Books</h2>
 					<div class="subheader">updates from the last two months &mdash; a library service</div>
+				</div>
+				<!-- back-button for small screens -->
+				<div id="landing-small" class="large-1 medium-2 small-3 columns show-for-small-only">
+					<a href="../index.html" id="landingpage" class="large button radius">
+						<i class="fi-arrow-left large"></i>
+					</a>
+				</div>
+				<div class="large-11 medium-10 small-9 columns show-for-small-only">
+					<h2>New E-Books</h2>
 				</div>
 			</div>
 		</section>
