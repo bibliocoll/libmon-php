@@ -4,8 +4,8 @@
 
 /* BEGIN - Landingpage */
 
-body.landing {
-background-color: #FFFFFF;
+body.start {
+background-color: #fff;
 }
 
 h1 > .fL {
@@ -63,7 +63,13 @@ font-family: 'open_sansregular', sans-serif;
 }
 
 #landing {
-position: fixed;
+position: absolute;
+left: 20px;
+top: 10px;
+}
+
+#landing-small {
+position: static;
 left: 20px;
 top: 10px;
 }
@@ -95,7 +101,7 @@ background-size: cover;
 -o-background-size: cover;
 }
 
-h2 {
+h2, h3 {
 color:#fff;
 }
 .subheader {
