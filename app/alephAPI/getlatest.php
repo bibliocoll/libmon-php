@@ -42,9 +42,6 @@ if (empty($mycallback) or !is_valid_callback($mycallback)) {
     exit("missing or malformed callback, exiting");
 }
 
-//input seems ok, output json headers
-header('content-type: application/json; charset=utf-8');
-header("access-control-allow-origin: *");
 
 // Aleph Base
 $base = "rdg01";
@@ -103,7 +100,9 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     } elseif ($myquery == "new-e-books") {
         $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$mydaterequest."%20AND%20wkm=E)";
     } else {
-        $request_url = $library_xurl."?op=find&base=".$base."&request=(".$myquery.")";
+        //$request_url = $library_xurl."?op=find&base=".$base."&request=(".$myquery.")";
+        header('status: 451 Unavailable For Legal Reasons', true, 451);
+        exit("Query string outside allowed values");
     }
 
     // The line below launches the first step in the X-services process - it's asking the server for a set of results
@@ -113,8 +112,10 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     $set_number = $result->set_number;
     $record_count = $result->no_records;
 
-    if (empty($record_count))
-        continue;
+    if (empty($record_count)) {
+        header('status: 204 No Content', true, 204);
+        exit("No Data from Aleph");
+}
 
     // The line below then takes the set number and sorts the results - sorting is more complicated to configure if you're
     // need to sort on a field that is not already sortable in your catalog - consult Sort Set X-Service in the Aleph
@@ -208,6 +209,8 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
 }
 
 //return json
+header('content-type: application/json; charset=utf-8');
+header("access-control-allow-origin: *");
 print $_GET['callback'] . "(" . $jsondata .")";
 ?>
 
