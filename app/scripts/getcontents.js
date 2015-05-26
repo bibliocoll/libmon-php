@@ -38,7 +38,7 @@ function getcontents(myquery) {
             $('a.title', $cl).text(value.title);
             $('.description', $cl).html(value.description);
             $('.cover img', $cl).attr('id',sysno);
-            $('.cover img', $cl).attr('src','img/cover/'+sysno+'.jpg');
+            $('.cover img', $cl).attr('src','../images/cover/'+sysno+'.jpg');
             $cl.appendTo('#response').fadeIn();
 
             $.each(value.authors, function(i, author) {

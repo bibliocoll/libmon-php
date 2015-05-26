@@ -3,11 +3,7 @@
     "private": true,
     "dependencies": {
         "slick-carousel": "~1.5",
-        "fastclick": "~1.0",
-        "jquery.cookie": "~1.4",
-        "foundation": "~5.5",
-        "modernizr": "~2.8",
-        "jquery": "~2.1"
+        "foundation": "~5.5"
     },
     "devDependencies": {}
 }
