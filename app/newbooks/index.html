@@ -5,8 +5,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>New Featured Books</title>
-<!-- bower:css -->
-<!-- endbower -->
+<!--build:css --> <!-- bower:css -->
+ <link rel="stylesheet" href="../../bower_components/slick-carousel/slick/slick.css" />
+ <link rel="stylesheet" href="../../bower_components/slick-carousel/slick/slick-theme.css" />
+ <link rel="stylesheet" href="../../bower_components/foundation/css/foundation.css" />
+ <!-- endbower --> <!-- endbuild -->
 </head>
 <body>
 
@@ -53,7 +56,7 @@
             </div>
         </div>
     </div>
-    <! -- End Template -->
+    <!-- End Template -->
 
 
     <!--<div class="preloader" style="display:none"></div>-->
@@ -86,8 +89,15 @@
 <footer>
     <p>&copy; MPI Collective Goods Library, Bonn 2015</p>
 </footer>
-<!-- bower:js -->
-<!-- endbower -->
+<!-- build:js --> <!-- bower:js -->
+ <script src="../../bower_components/modernizr/modernizr.js"></script>
+ <script src="../../bower_components/jquery/dist/jquery.js"></script>
+ <script src="../../bower_components/slick-carousel/slick/slick.min.js"></script>
+ <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
+ <script src="../../bower_components/jquery.cookie/jquery.cookie.js"></script>
+ <script src="../../bower_components/jquery-placeholder/jquery.placeholder.js"></script>
+ <script src="../../bower_components/foundation/js/foundation.js"></script>
+ <!-- endbower --> <!-- endbuild -->
 <script>
 $(document).foundation();
 var doc = document.documentElement;
