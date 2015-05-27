@@ -3,4 +3,4 @@ node_modules/*
 .tmp/*
 dist/*
 **/*.map
-styles/*.css
+app/styles/*.css
