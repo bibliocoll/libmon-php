@@ -15,22 +15,30 @@ module.exports = function(grunt) {
         },
         clean: ['.tmp/concat', 'dist/styles', 'dist/scripts'],
         copy: {
-            copy: {
+            app: {
                 expand: true,
                 cwd: 'app/',
-                src: ['index.html', '**/index.html','images/*','alephAPI/*', 'styles/fonts'],
+                src: ['index.html', '**/index.html','images/*','alephAPI/*', 'styles/fonts/*'],
                 dest: 'dist/',
+            },
+            foundation_icon_fonts: {
+                expand: true,
+                cwd: 'bower_components/foundation-icon-fonts/',
+                src: ['*.{woff,tff,svg,eot}'],
+                dest: 'dist/styles/',
             }
         },
-        image_resize: {
-            resize: {
-                options: {
-                    width: 150,
-                    //concurrency: 4,
-                    upscale: false
-                },
-                src: 'app/images/cover/*.{png,jpg,gif}',
-                dest: '.tmp/images/cover/'
+        "imagemagick-resize":{
+            resize:{
+                from:'app/images/cover/',
+                to:'.tmp/images/cover/',
+                files:'*',
+                props:{
+                    width: 187,
+                    quality: 0.95,
+                    //filter: 'Mitchell',
+                    sharpening: 0.1
+                }
             }
         },
         imagemin: {
@@ -65,6 +73,7 @@ module.exports = function(grunt) {
                 'app/newpublications/index.html'
             ],
             options: {
+                sourceMap: true,
                 dest: 'dist'
             }
         },
@@ -111,12 +120,12 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', [
-        'newer:image_resize:resize',
-        'newer:imagemin:minify',
+        'imagemagick-resize',
+        'imagemin:minify',
         'wiredep',
         'clean',
         'copy',
-        'sass',
+        'newer:sass',
         'useminPrepare',
         'concat:generated',
         'uglify:generated',

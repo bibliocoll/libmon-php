@@ -27,6 +27,7 @@
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-filerev": "^2.3.1",
     "grunt-image-resize": "^1.0.0",
+    "grunt-imagemagick": "^0.1.5",
     "grunt-newer": "^1.1.0",
     "grunt-sass": "^1.0.0",
     "grunt-usemin": "^3.0.0",
