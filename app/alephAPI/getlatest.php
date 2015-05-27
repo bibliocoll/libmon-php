@@ -101,7 +101,7 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
         $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$mydaterequest."%20AND%20wkm=E)";
     } else {
         //$request_url = $library_xurl."?op=find&base=".$base."&request=(".$myquery.")";
-        header('status: 451 Unavailable For Legal Reasons', true, 451);
+        header('status: 451 Unavailable For Legal Reasons', true, 400);
         exit("Query string outside allowed values");
     }
 
