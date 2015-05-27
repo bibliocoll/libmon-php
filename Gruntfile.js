@@ -8,28 +8,28 @@ module.exports = function(grunt) {
                     'app/**/*.html',   // .html support...
                     //'app/views/**/*.jade',   // .jade support...
                     //'app/config.yml',         // and .yml & .yaml support out of the box!
-                    'app/styles/main.scss',  // .scss & .sass support...
-                    'app/styles/main.sass'  // .scss & .sass support...
+                    'app/styles/*.scss',  // .scss & .sass support...
+                    'app/styles/*.sass'  // .scss & .sass support...
                 ],
             }
         },
+        clean: ['.tmp/concat', 'dist/styles', 'dist/scripts'],
         copy: {
             copy: {
-            expand: true,
-            cwd: 'app/',
-            src: ['index.html', '**/index.html','images/*'],
-            dest: 'dist/',
+                expand: true,
+                cwd: 'app/',
+                src: ['index.html', '**/index.html','images/*','alephAPI/*'],
+                dest: 'dist/',
             }
         },
         image_resize: {
             resize: {
                 options: {
                     width: 150,
-                    concurrency: 4,
-                    overwrite: true,
+                    //concurrency: 4,
                     upscale: false
                 },
-                src: 'app/images/cover/*',
+                src: 'app/images/cover/*.{png,jpg,gif}',
                 dest: '.tmp/images/cover/'
             }
         },
@@ -40,6 +40,20 @@ module.exports = function(grunt) {
                     cwd: '.tmp/images/cover/',
                     src: ['*.{png,jpg,gif}'],
                     dest: 'dist/images/cover/'
+                }]
+            }
+        },
+        sass: {
+            options: {
+                sourceMap: true
+            },
+            convert: {
+                files: [{
+                    expand: true,
+                    cwd: 'app/styles',
+                    src: ['*.sass'],
+                    dest: 'app/styles',
+                    ext: '.css'
                 }]
             }
         },
@@ -96,27 +110,19 @@ module.exports = function(grunt) {
         }
     });
 
-    //grunt.loadNpmTasks('grunt-wiredep');
-    //grunt.loadNpmTasks('grunt-usemin');
-    //grunt.loadNpmTasks('grunt-contrib-copy');
-    //grunt.loadNpmTasks('grunt-contrib-cssmin');
-    //grunt.loadNpmTasks('grunt-contrib-uglify');
-    //grunt.loadNpmTasks('grunt-contrib-concat');
-    //grunt.loadNpmTasks('grunt-filerev');
-    //grunt.loadNpmTasks('grunt-imagemin');
-    //grunt.loadNpmTasks('grunt-image-resize');
-
     grunt.registerTask('default', [
         'newer:image_resize:resize',
         'newer:imagemin:minify',
         'wiredep',
+        'clean',
         'copy',
+        'sass',
         'useminPrepare',
         'concat:generated',
         'uglify:generated',
         'cssmin:generated',
         'filerev',
-        'usemin',
-        'htmlmin'
+        'usemin'
+        //'htmlmin'
     ]);
 };

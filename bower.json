@@ -1,9 +1,10 @@
 {
-    "name": "libmon-php",
-    "private": true,
-    "dependencies": {
-        "slick-carousel": "~1.5",
-        "foundation": "~5.5"
-    },
-    "devDependencies": {}
+  "name": "libmon-php",
+  "private": true,
+  "dependencies": {
+    "normalize.css": "~3.0.3",
+    "slick-carousel": "~1.5",
+    "foundation": "~5.5"
+  },
+  "devDependencies": {}
 }
