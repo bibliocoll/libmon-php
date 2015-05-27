@@ -4,3 +4,4 @@ node_modules/*
 dist/*
 **/*.map
 app/styles/*.css
+app/images/cover/Thumbs.db
