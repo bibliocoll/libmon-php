@@ -62,9 +62,17 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     $return_array = array();
     $bibname = "MPI for Research on Collective Goods";
 
+	//EDIT ME!
     //Change library_url to match the base url of your catalog
     $library_url = "http://aleph.mpg.de";
     $vufind_base = "http://core.coll.mpg.de";
+	//END EDIT ME!
+	
+	// Define local Aleph retrieval signs to select the publications you want to present, e.g.: 
+	// 'YYMM' for date
+	// 'R' for institute publications
+	// 'featuredbook' for new books
+	// 'E' for new e-books
 
     // Change as needed to match your catalog X-server location - please consult the X-services documentation
     // for help in setting up the X-server
@@ -76,10 +84,10 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     // In order to sort, sort codes must be used from the Aleph // xxx01/tab/tab_sort table which uses
     // the filing procedure defined at xxx01/tab/tab_filing
     // Please consult the files above for help in setting this up
-    // Voraussetzung fuer eine funktionierende Sortierung nach Datum: in tab_sort muss bei *allen* folgender Eintrag stehen
-    // 11 99 003#1         002#1                                                   00 00
-    // (nach Aenderungen in tab_sort muss p-manage-27 ausgeloest werden)
-    $sort_code = "&sort_code_1=11&sort_order_1=D&sort_code_2=03&sort_order_2=D"; // sortiert vor nach MAB 003/002
+    // Prerequisite for sorting by date: add the following entry to *all* in tab_sort
+	// 11 99 003#1         002#1                                                   00 00
+	// (after editing tab_sort you must run p-manage-27)
+    $sort_code = "&sort_code_1=11&sort_order_1=D&sort_code_2=03&sort_order_2=D"; // sorts by MAB 003/002
 
     //Present variables
     $display_url = $library_url."/X?op=present&base=".$base;
@@ -88,7 +96,7 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     //change to the url of your library's X server
     $library_xurl= $library_url."/X";
 
-    // hier kann man Queries festlegen, für die man z.B. PHP-Logik braucht (z.B. aktuellen Monat herausfinden)
+	// define queries, which are needed (e.g.) for PHP-logic (e.g. find out recent month)
     $mydaterequest = date('ym')."+OR+".date('ym',strtotime("-1 Months"));
     if ($myquery == "new-acq") {
         $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$mydaterequest.")";
@@ -130,9 +138,9 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     // for example you can change the 245 subfield b to c if you'd rather have the author listed instead of the subtitle
     // (if that's how items are cataloged at your library - consult your local cataloger if you want to find out more)
     foreach ($result as $record){
-        // pruefe GG-Status (Z30$$p), z.B. 'SV' oder 'GG' oder 'NP' (expand_doc_bib_z30 muss dafuer in tab_expand f. WWW-X gesetzt sein)
+        // check item process status (Z30$$p), e.g. 'SV' (sent to vendor) or 'GG' (in process) or 'NP' (not yet published) (expand_doc_bib_z30 has to be set in tab_expand f. WWW-X)
         $gg = $record->xpath("metadata/oai_marc/varfield[@id='Z30']/subfield[@label='p']");
-        if (empty($gg)) { // mache weiter nur wenn GG-Status = '' (leer) (= Bestand)
+        if (empty($gg)) { // continue only when item process status = '' (empty) (= holdings)
             $record_array = array();
 
             $doc_number_result = $record->xpath("doc_number");
@@ -143,13 +151,13 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
             $author2 = (empty($author2_result[0]) ? '' :  preg_replace("/[<>]/","",$author2_result[0]));
             $author3_result = $record->xpath("metadata/oai_marc/varfield[@id='108']/subfield[@label='a']");
             $author3 = (empty($author3_result[0]) ? '' :  preg_replace("/[<>]/","",$author3_result[0]));
-            // Titel Einzelband:
+            // Title volume:
             $title_result = $record->xpath("metadata/oai_marc/varfield[@id='331' and @i2='1']/subfield[@label='a']");
             $subtitle_result = $record->xpath("metadata/oai_marc/varfield[@id='335']/subfield[@label='a']");
-            // Titel uebergeordnet:
+            // Title of superior record:
             $title_mbw_result = $record->xpath("metadata/oai_marc/varfield[@id='331' and @i2='2']/subfield[@label='a']");
             $volume = $record->xpath("metadata/oai_marc/varfield[@id='089']/subfield[@label='a']");
-            // Titel konstruieren:
+            // Title construction:
             $title = trim((empty($title_result[0]) ? '' : rtrim((string)preg_replace("/[<>]/","",$title_result[0]),"/")) . (empty($subtitle_result[0]) ? '' :  ": ".rtrim((string)$subtitle_result[0],"/")));
             $title .= (empty($title_mbw_result[0]) ? '' : " (".rtrim((string)preg_replace("/[<>]/","",$title_mbw_result[0]),"/"));
             $title .= (empty($volume[0]) ? '' :  ": ".rtrim((string)$volume[0],"/").") ");
@@ -158,25 +166,24 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
             $publisher = $record->xpath("metadata/oai_marc/varfield[@id='410']/subfield[@label='a']");
             $year = $record->xpath("metadata/oai_marc/varfield[@id='425']/subfield[@label='a']");
             $notation_result = $record->xpath("metadata/oai_marc/varfield[@id='700']/subfield[@label='a']");
-            // zeige bis zu 3 Notationen an:
+            // display up to 3 notations:
             $notation = (empty($notation_result[0]) ? '' :  $notation_result[0]).(empty($notation_result[1]) ? '' : ", ". $notation_result[1]).(empty($notation_result[2]) ? '' : ", ".$notation_result[2]);
-            // Inhaltsbeschreibungen abgreifen:
+            // grab summary:
             $abstract = $record->xpath("metadata/oai_marc/varfield[@id='750']/subfield[@label='a']");
-            // Hier wird die Description konstruiert:
+            // construct description:
             $description = (empty($publisher[0]) ? '' : $publisher[0]." ").(empty($year[0]) ? '' : $year[0].". ").(empty($callnumber_result[0]) ? '' : " Call No.:&nbsp;".(string)$callnumber_result[0]);
             $description .= (empty($notation) ? '' : ". Notation: ". $notation.".");
             $description .= (empty($abstract[0]) ? '' : "- Abstract: ". $abstract[0]);
-            // Unselbstaendige Werke: Source konstruieren
+            // component part: construct source
             $mab590_result = $record->xpath("metadata/oai_marc/varfield[@id='590']/subfield[@label='a']");
             $mab595_result = $record->xpath("metadata/oai_marc/varfield[@id='595']/subfield[@label='a']");
             $mab596_result = $record->xpath("metadata/oai_marc/varfield[@id='596']/subfield[@label='a']");
             $aleph_source = (empty($mab590_result[0]) ? '' :  preg_replace("/[<>]/","",trim($mab590_result[0])));
             $aleph_source .= (empty($mab596_result[0]) ? '' :  ' ('.preg_replace("/[<>]/","",trim($mab596_result[0])).')');
             $aleph_source .= (empty($mab595_result[0]) ? '' :  ' '. trim($mab595_result[0]));
-            // bei folgenden Queries muss [1] selektiert werden, da in
-            // Aleph-Ausgabe immer das erste Feld fuer die erste Hierarchie
-            // steht (sonst default: letztes gefundenes Feld = kann auch
-            // uebergeordnetes Feld sein!
+			// select [1] in the following queries, because the aleph output 
+			// always uses the first field for the first level of hierarchy
+			// (default, if omitted: uses last found field, which could be the parent level field!)
             $pubDate_result = $record->xpath("metadata/oai_marc/varfield[@id='003'][1]/subfield[@label='a']");
             $pubDate_result_2 = $record->xpath("metadata/oai_marc/varfield[@id='002'][1]/subfield[@label='a']");
             $pubDateA = trim((empty($pubDate_result[0]) ? $pubDate_result_2[0] : rtrim((string)$pubDate_result[0]))); // get/trim date
