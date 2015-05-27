@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             copy: {
                 expand: true,
                 cwd: 'app/',
-                src: ['index.html', '**/index.html','images/*','alephAPI/*'],
+                src: ['index.html', '**/index.html','images/*','alephAPI/*', 'styles/fonts'],
                 dest: 'dist/',
             }
         },
