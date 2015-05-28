@@ -21,6 +21,18 @@ module.exports = function(grunt) {
                 src: ['index.html', '**/index.html','images/*','alephAPI/*', 'styles/fonts/*'],
                 dest: 'dist/',
             },
+            slick_fonts: {
+                expand: true,
+                cwd: 'bower_components/slick-carousel/slick/fonts/',
+                src: ['*.{woff,tff,svg,eot}'],
+                dest: 'dist/styles/fonts/',
+            },
+            slick_ajax_loader: {
+                expand: true,
+                cwd: 'bower_components/slick-carousel/slick/',
+                src: ['ajax-loader.gif'],
+                dest: 'dist/styles/',
+            },
             foundation_icon_fonts: {
                 expand: true,
                 cwd: 'bower_components/foundation-icon-fonts/',
@@ -131,7 +143,7 @@ module.exports = function(grunt) {
         'uglify:generated',
         'cssmin:generated',
         'filerev',
-        'usemin'
-        //'htmlmin'
+        'usemin',
+        'htmlmin'
     ]);
 };

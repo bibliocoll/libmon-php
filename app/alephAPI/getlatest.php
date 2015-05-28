@@ -50,7 +50,7 @@ $cache_id = $myquery;
 
 $cache_options = array(
     'cacheDir' => '/tmp/',
-    'lifeTime' => 36 //in Seconds
+    'lifeTime' => 3600 //in Seconds
 );
 
 $Cache_Lite = new Cache_Lite($cache_options);

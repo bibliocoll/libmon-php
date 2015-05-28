@@ -24,10 +24,9 @@ Use `git clone https://github.com/bibliocoll/libmon-php.git`, or use the
 'Download ZIP' link on the right.
 
 ##Checking out the Demo
-the demo is found in an archive named 'demo.zip' and, when extracted, creates
+The demo is found in an archive named 'demo.zip' and, when extracted, creates
 a directory structure with an un-minified version of what you would get out of
 running the build process.
-
 
 ```
 demo/
@@ -45,10 +44,11 @@ demo/
     └── fonts/
 ```
 
-TODO: actually add non-expiring demo cache files so there is some data to show
-
-If you copy the demo folder to your webserver, you shoud be able to browse some
-sample data (provided the above mentioned PHP requirements are satisfied).
+Instead of interfacing with Aleph, the demo by default serves CC0-licensed
+stock photos and some example text that comes bundled with it.
+If you copy the demo folder to your webserver, you should be able to get a
+feeling for the interface with the included sample data (provided the above 
+mentioned PHP requirements are satisfied).
 
 ##Build Process
 Building requires [ImageMagick] and [npm] to be installed on your system.
@@ -72,28 +72,40 @@ Verify with `node --version` that you have a working installation of version
 If your package manager does not supply a recent version, uninstall and
 [install manually].
 
-### those goddamn hipster build tools that no-one will still be using tomorrow
-#### in short: `npm install && bower install && grunt`
-
-Once that is all set up, navigate your console to the `libmon-php` folder and
-grab all the requirements with `npm install`. This will start a lengthy process
-with lots of output and a few warning messages about failed optional
-dependencies. If that completes without actual errors, you will now have bower
-and grunt installed in this directory, which allows you to download all the
+### using those goddamn hipster build tools
+Once that is set up, navigate your console to the `libmon-php` folder and grab
+all the requirements with `npm install`. This will start a lengthy process with
+lots of output and a few warning messages about failed optional dependencies.
+If that completes without actual errors, you will now have [Bower] and [Grunt]
+installed in this directory, which enables you to download all the
 javascript and css library dependencies from github in the correct respective
-versions with `bower install`. This will create some output roughly similar to
+versions with `bower install`. That will create some output roughly similar to
 what npm spat out, and will hopefully provision you with all the required bits
 and pieces to successfully run `grunt` and build a minified version from
 source.
+#### in short: `npm install && bower install && grunt`
 
-You can find the result of a completed `grunt` run in a newly created folder
-named 'dist'. If you change anything in the 'app' folder, running `grunt`
-again will see your changes reflected in 'dist'.
+This will create directories as follows
+```
+libmon-php
+├── [4.9M]  bower_components/
+├── [ 72M]  node_modules/
+├── [ ~1M]  .tmp/
+└── [ ~1M]  dist/
+```
+where 'node_modules' contains one meter of shelved books worth of mostly
+redundant javascript, 'bower_components' contains the git repositories of
+all the web framework code this project uses and the remaining two
+not-ridiculously-large directories contain working files and the minified
+version of what was in 'app' before `grunt` was run.
+If you change anything in the 'app' folder, running `grunt` again will see
+your changes reflected in 'dist'.
 
 The image optimization part of the grunt workflow can fail with a 'spawn EMFILE'
 error, meaning that too many file handles have been opened. You should be able
 to raise that limit with `ulimit -S -n 4096`.
 
+TODO: create a `grunt debug` task to build an unminified/sourcemapped version
 ##Hacking on it
 ###High concept, flow of control & data
 Upon page load, the Javascript part (app/scripts/getcontents.js) triggers an
@@ -128,3 +140,5 @@ TODO: fill in the juicy bits below
 [chocolatey]: https://chocolatey.org/
 [nvm]: https://github.com/creationix/nvm
 [install manually]: https://nodejs.org/download/
+[Bower]: http://bower.io
+[Grunt]: http://gruntjs.com
