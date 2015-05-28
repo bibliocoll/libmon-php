@@ -67,8 +67,8 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     $library_url = "http://aleph.mpg.de";
     $vufind_base = "http://core.coll.mpg.de";
 	//END EDIT ME!
-	
-	// Define local Aleph query fields to select the publications you want to present, e.g.: 
+
+	// Define local Aleph query fields to select the publications you want to present, e.g.:
 	// 'YYMM' for month of acquisition
 	// 'R' for institute publications
 	// 'featuredbook' for new books
@@ -181,7 +181,7 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
             $aleph_source = (empty($mab590_result[0]) ? '' :  preg_replace("/[<>]/","",trim($mab590_result[0])));
             $aleph_source .= (empty($mab596_result[0]) ? '' :  ' ('.preg_replace("/[<>]/","",trim($mab596_result[0])).')');
             $aleph_source .= (empty($mab595_result[0]) ? '' :  ' '. trim($mab595_result[0]));
-			// select [1] in the following queries, because the aleph output 
+			// select [1] in the following queries, because the aleph output
 			// always uses the first field for the first level of hierarchy
 			// (default, if omitted: uses last found field, which could be the parent level field!)
             $pubDate_result = $record->xpath("metadata/oai_marc/varfield[@id='003'][1]/subfield[@label='a']");
