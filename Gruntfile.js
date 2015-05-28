@@ -21,6 +21,7 @@ module.exports = function(grunt) {
                 src: ['index.html', '**/index.html','images/*','alephAPI/*', 'styles/fonts/*'],
                 dest: 'dist/',
             },
+<<<<<<< HEAD
             slick_fonts: {
                 expand: true,
                 cwd: 'bower_components/slick-carousel/slick/fonts/',
@@ -33,6 +34,8 @@ module.exports = function(grunt) {
                 src: ['ajax-loader.gif'],
                 dest: 'dist/styles/',
             },
+=======
+>>>>>>> afff586018514bffc846bec8675198eef8c7610a
             foundation_icon_fonts: {
                 expand: true,
                 cwd: 'bower_components/foundation-icon-fonts/',

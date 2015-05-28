@@ -72,6 +72,7 @@ Verify with `node --version` that you have a working installation of version
 If your package manager does not supply a recent version, uninstall and
 [install manually].
 
+<<<<<<< HEAD
 ### using those goddamn hipster build tools
 Once that is set up, navigate your console to the `libmon-php` folder and grab
 all the requirements with `npm install`. This will start a lengthy process with
