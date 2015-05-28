@@ -68,8 +68,8 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     $vufind_base = "http://core.coll.mpg.de";
 	//END EDIT ME!
 	
-	// Define local Aleph retrieval signs to select the publications you want to present, e.g.: 
-	// 'YYMM' for date
+	// Define local Aleph query fields to select the publications you want to present, e.g.: 
+	// 'YYMM' for month of acquisition
 	// 'R' for institute publications
 	// 'featuredbook' for new books
 	// 'E' for new e-books
