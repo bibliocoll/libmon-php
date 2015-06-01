@@ -5,7 +5,7 @@
  *
  * Time-stamp: "2015-05-21 10:48:10 krug"
  *
- * @author Daniel Zimmel <zimmel@coll.mpg.de>, Alexander Krug <krug@coll.mpg.de>
+ * @author Daniel Zimmel <zimmel@coll.mpg.de>, minor edits by Alexander Krug <krug@coll.mpg.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
  */
