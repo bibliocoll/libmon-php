@@ -48,9 +48,9 @@ function getcontents(myquery) {
             });
 
             // when an error happens on image loading:
-            // $('#'+sysno).error(function() {
-            // 		$(this).attr('src','img/bgcoll-logo.png');
-            // });
+            $('#'+sysno).error(function() {
+             	$(this).attr('src','images/bgcoll-logo.png');
+            });
             $('img.author').error(function() {
                 // remove img:
                 $(this).remove();
