@@ -160,7 +160,7 @@ useful SASS features, but we hope you at least like the syntax better.
 
 ###Frameworks: Shoulders of giants
 libmon-php is made with the Zurb [Foundation] framework, which is built upon
-[jQuery], the carousel/slider used is called [slick].
+[jQuery], the carousel/slider is called [slick].
 
 ###Build Pipeline: Gruntfile.js
 This setup is a bit of an experiment and is likely to change again.
