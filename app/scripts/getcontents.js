@@ -13,6 +13,9 @@
 /* get contents */
 function getcontents(myquery) {
     var myURL = '../alephAPI/getlatest.php?query='+ myquery +'&callback=featured';
+
+    var imgPath = 'http://www.coll.mpg.de/DOWNLOAD/_Fotos/';
+
     $('#response').children().remove();
 
     $('#main-content-switcher').fadeIn('slow');
@@ -43,13 +46,18 @@ function getcontents(myquery) {
 
             $.each(value.authors, function(i, author) {
                 //console.log(author);
-                var authorImg = author.substr(0, author.indexOf(',')).toLowerCase();
-                $('#item-'+no+' div.authors').append('<span class="author">'+author+'</span><br/></div>');
-            });
+                var authorSepIndex = author.indexOf(',');
+                var authorFirstName = author.substr(authorSepIndex + 1, author.length - authorSepIndex);
+                var authorLastName = author.substr(0, authorSepIndex);
+                var authorNormal = authorFirstName + ' ' + authorLastName;
+                var authorImg = authorFirstName.replace(/[\.\s]/g,'').toLowerCase() + '_' + authorLastName.toLowerCase();
 
+                $('#item-'+no+' div.authors').append('<a class="author" href="">'+authorNormal+'</a><br/></div>');
+                $('#item-'+no+' div.authorpics').append('<img class="author" title="'+authorImg+'" src="'+imgPath + authorImg+'.jpg"></img>');
+            });
             // when an error happens on image loading:
             $('#'+sysno).error(function() {
-             	$(this).attr('src','images/bgcoll-logo.png');
+             	$(this).attr('src','../images/bgcoll-logo.png');
             });
             $('img.author').error(function() {
                 // remove img:
