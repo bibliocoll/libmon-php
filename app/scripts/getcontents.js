@@ -39,6 +39,10 @@ function getcontents(myquery) {
             $('a.title', $cl).attr('href',value.link);
             $('a.linkToCORE', $cl).attr('href',value.link);
             $('a.title', $cl).text(value.title);
+            //var source = $('source', $cl)
+            //if (source) {
+                $('.source', $cl).text(value.aleph_source)
+            //}
             $('.description', $cl).html(value.description);
             $('.cover img', $cl).attr('id',sysno);
             $('.cover img', $cl).attr('src','../images/cover/'+sysno+'.jpg');
@@ -57,7 +61,7 @@ function getcontents(myquery) {
             });
             // when an error happens on image loading:
             $('#'+sysno).error(function() {
-             	$(this).attr('src','../images/bgcoll-logo.png');
+                $(this).attr('src','../images/bgcoll-logo.png');
             });
             $('img.author').error(function() {
                 // remove img:

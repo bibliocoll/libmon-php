@@ -96,17 +96,17 @@ if ($jsondata = $Cache_Lite->get($cache_id)) {
     //change to the url of your library's X server
     $library_xurl= $library_url."/X";
 
-	// define queries, which are needed (e.g.) for PHP-logic (e.g. find out recent month)
+    // define queries, which are needed (e.g.) for PHP-logic (e.g. find out recent month)
     $mydaterequest = date('ym')."+OR+".date('ym',strtotime("-1 Months"));
+    $my2nddaterequest = $mydaterequest."+OR+".date('ym',strtotime("-2 Months"));
     if ($myquery == "new-acq") {
         $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$mydaterequest.")";
     } elseif ($myquery == "newpublications") {
-        $mydaterequest = $mydaterequest."+OR+".date('ym',strtotime("-2 Months"));
-        $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$mydaterequest."%20AND%20wkm=R)";
+        $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$my2nddaterequest."%20AND%20wkm=R)";
     } elseif ($myquery == "newfeaturedbooks") {
         $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$mydaterequest."%20AND%20wab=featuredbook)";
     } elseif ($myquery == "new-e-books") {
-        $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$mydaterequest."%20AND%20wkm=E)";
+        $request_url = $library_xurl."?op=find&base=".$base."&request=(WAB=".$my2nddaterequest."%20AND%20wkm=E)";
     } else {
         //$request_url = $library_xurl."?op=find&base=".$base."&request=(".$myquery.")";
         header('status: 451 Unavailable For Legal Reasons', true, 400);
